@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/votunio/coreapi/apiwrapper"
+	"github.com/votunio/sdk-core-go/apiwrapper"
 )
 
 const (
