@@ -29,7 +29,7 @@ type CoreApi struct {
 }
 
 func New(tokenAuth, appID, rootUrl string) CoreApi {
-	return CoreApi{tokenAuth, appID, rootUrl}
+	return CoreApi{tokenAuth: tokenAuth, appID: appID, RootUrl: rootUrl}
 }
 
 // Creates a new custodied wallet for a new user
