@@ -10,6 +10,8 @@ import (
 	"net/http"
 	"net/url"
 	"time"
+
+	"vottun.com/tkn/dto"
 )
 
 const (
@@ -69,7 +71,13 @@ func RequestApiEndpoint(r *RequestApiEndpointInfo, setReqHeaders SetReqHeaders) 
 					return errors.New(ErrorUnauthorized)
 
 				default:
-					return fmt.Errorf(ErrorHttpStatus, statuscode)
+					errorMsg := dto.ErrorDTO{}
+					err := json.Unmarshal(body, &errorMsg)
+					if err != nil {
+						log.Printf("Error unmarshaling token information received from api: %+v", err)
+						return fmt.Errorf(ErrorHttpStatus, statuscode)
+					}
+					return errors.New(errorMsg.Code)
 				}
 			} else {
 				log.Printf("error executing request with error %+v", err)
