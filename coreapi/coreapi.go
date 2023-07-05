@@ -4,22 +4,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-
-	"github.com/vottunio/sdk-core-go/apiwrapper"
-)
-
-const (
-	NewWalletUrl                          string = "evm/wallet/custodied/new"
-	AccountZeroAddressUrl                 string = "evm/wallet/custodied/address"
-	UsersRegisteredWithCustodiedWalletUrl string = "evm/wallet/custodied/list"
-	WalletSeedPhraseUrl                   string = "evm/wallet/custodied/user/wallet"
-	CustodiedWalletCoreMutableUrl         string = "evm/wallet/custodied/transact/mutable"
-	CoreMutableUrl                        string = "evm/transact/mutable"
-	CoreViewUrl                           string = "evm/transact/view"
-	CONTENT_TYPE                          string = "Content-Type"
-	AUTH_APP_ID                           string = "x-application-vkn"
-	AUTHORIZATION                         string = "Authorization"
-	MIME_TYPE_JSON                        string = "application/json; charset=UTF-8"
 )
 
 type CoreApi struct {
@@ -117,6 +101,7 @@ func (c *CoreApi) SendMutableTransaction(requestDto *AbiMutableRequestDTO) (*Abi
 
 	return responseDto, nil
 }
+
 func (c *CoreApi) SendViewTransaction(requestDto *AbiViewOptionsDTO) ([]interface{}, error) {
 	var responseDto []interface{}
 
@@ -129,30 +114,16 @@ func (c *CoreApi) SendViewTransaction(requestDto *AbiViewOptionsDTO) ([]interfac
 
 	return responseDto, nil
 }
-func (c *CoreApi) sendCoreTransaction(url, httpMethod string, requestDto, responseDto interface{}) error {
-	return apiwrapper.RequestApiEndpoint(
-		&apiwrapper.RequestApiEndpointInfo{
-			EndpointUrl:  c.createAbsoluteCoreApiUrl(url),
-			RequestData:  requestDto,
-			ResponseData: &responseDto,
-			HttpMethod:   httpMethod,
-			TokenAuth:    c.tokenAuth,
-			AppID:        c.appID,
-		},
-		setReqHeaders,
-	)
-}
 
-func (c *CoreApi) createAbsoluteCoreApiUrl(relativePath string) string {
+func (c *CoreApi) TransferNetworkNativeCrypto(requestDto *AbiMutableRequestDTO) (*AbiMutableResponseDTO, error) {
+	var responseDto *AbiMutableResponseDTO
 
-	return c.RootUrl + relativePath
-}
+	err := c.sendCoreTransaction(TransferNativeNetworkCryptoUrl, http.MethodPost, &requestDto, &responseDto)
 
-func setReqHeaders(req *http.Request, tokenAuth, appID string) {
+	if err != nil {
+		log.Printf("An error has raised calling core api to transfer networknative crypto. %+v", err)
+		return nil, err
+	}
 
-	req.Header.Set(CONTENT_TYPE, MIME_TYPE_JSON)
-
-	req.Header.Add(AUTHORIZATION, fmt.Sprintf("Bearer %s", tokenAuth))
-	req.Header.Add(AUTH_APP_ID, appID)
-
+	return responseDto, nil
 }

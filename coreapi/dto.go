@@ -16,6 +16,7 @@ type AccountZeroResponseDTO struct {
 type AbiMutableRequestDTO struct {
 	ContractAddress string        `json:"contractAddress"`
 	Sender          string        `json:"sender"`
+	Recipient       *string       `json:"recipient,omitempty"`
 	Method          string        `json:"method"`
 	Nonce           *uint64       `json:"nonce"`
 	Network         uint64        `json:"blockchainNetwork"`

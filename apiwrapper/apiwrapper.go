@@ -10,8 +10,6 @@ import (
 	"net/http"
 	"net/url"
 	"time"
-
-	"vottun.com/tkn/dto"
 )
 
 const (
@@ -20,6 +18,12 @@ const (
 	ErrorHttpStatus          string = "ERROR_HTTP_STATUS_%d"
 	ErrorApiWrapperUrlNotSet string = "ERROR_API_WRAPPER_URL_NOT_SET"
 )
+
+type ErrorDTO struct {
+	Code string `json:"code"`
+
+	Message string `json:"message"`
+}
 
 type SetReqHeaders func(req *http.Request, tokenAuth string, appID string)
 
@@ -35,18 +39,20 @@ type RequestApiEndpointInfo struct {
 func RequestApiEndpoint(r *RequestApiEndpointInfo, setReqHeaders SetReqHeaders) error {
 	var req *http.Request
 	var res *http.Response
-	var statuscode int = 0
+	var statuscode int
+	var requestDataBuffer *bytes.Buffer
 
 	if _, err := url.Parse(r.EndpointUrl); err == nil {
-		b, err := json.Marshal(r.RequestData)
-		if err != nil {
-			log.Printf("An error was raised marshalling request data. %v", err)
-			return err
+		if r.RequestData != nil {
+			b, err := json.Marshal(r.RequestData)
+			if err != nil {
+				log.Printf("An error was raised marshalling request data. %v", err)
+				return err
+			}
+			requestDataBuffer = bytes.NewBuffer(b)
 		}
 
-		// log.Printf("Sending post request to validate token and app for token %s, customer id %s and app secret %s", jti, customerID, appSecret)
-
-		if req, err = http.NewRequest(r.HttpMethod, r.EndpointUrl, bytes.NewBuffer(b)); err == nil {
+		if req, err = http.NewRequest(r.HttpMethod, r.EndpointUrl, requestDataBuffer); err == nil {
 			setReqHeaders(req, r.TokenAuth, r.AppID)
 			client := &http.Client{
 				Timeout: 30 * time.Second,
@@ -60,10 +66,12 @@ func RequestApiEndpoint(r *RequestApiEndpointInfo, setReqHeaders SetReqHeaders) 
 				log.Printf("Received statuscode %d", statuscode)
 				switch statuscode {
 				case http.StatusOK, http.StatusCreated:
-					err = json.Unmarshal(body, &r.ResponseData)
-					if err != nil {
-						log.Printf("Error unmarshaling token information received from api: %+v", err)
-						return errors.New(ErrorParsingJson)
+					if r.ResponseData != nil {
+						err = json.Unmarshal(body, &r.ResponseData)
+						if err != nil {
+							log.Printf("Error unmarshaling token information received from api: %+v", err)
+							return errors.New(ErrorParsingJson)
+						}
 					}
 					return nil
 
@@ -71,7 +79,7 @@ func RequestApiEndpoint(r *RequestApiEndpointInfo, setReqHeaders SetReqHeaders) 
 					return errors.New(ErrorUnauthorized)
 
 				default:
-					errorMsg := dto.ErrorDTO{}
+					errorMsg := ErrorDTO{}
 					err := json.Unmarshal(body, &errorMsg)
 					if err != nil {
 						log.Printf("Error unmarshaling token information received from api: %+v", err)
