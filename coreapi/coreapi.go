@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
 )
 
 type CoreApi struct {
@@ -13,6 +14,10 @@ type CoreApi struct {
 }
 
 func New(tokenAuth, appID, rootUrl string) CoreApi {
+	if !strings.HasSuffix(rootUrl, "/") {
+		rootUrl += "/"
+	}
+
 	return CoreApi{tokenAuth: tokenAuth, appID: appID, RootUrl: rootUrl}
 }
 
@@ -95,7 +100,7 @@ func (c *CoreApi) SendMutableTransaction(requestDto *AbiMutableRequestDTO) (*Abi
 	err := c.sendCoreTransaction(CoreMutableUrl, http.MethodPost, &requestDto, &responseDto)
 
 	if err != nil {
-		log.Printf("An error has raised calling core api Create New Custodied Wallet. %+v", err)
+		log.Printf("An error has raised calling core api sending mutable transaction. %+v", err)
 		return nil, err
 	}
 
