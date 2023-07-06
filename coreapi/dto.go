@@ -33,7 +33,9 @@ type AbiMutableResponseDTO struct {
 	Nonce  uint64 `json:"nonce"`
 }
 
+// DTO used to get the wallet first account (the first one derived using seed)
 type AccountZeroRequestDTO struct {
+	// The user email
 	Email string `json:"userEmail"`
 }
 

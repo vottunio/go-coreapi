@@ -1,7 +1,7 @@
 # sdk-core-go
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Go Reference](https://pkg.go.dev/badge/github.com/vottunio/log.svg)](https://pkg.go.dev/github.com/vottunio/log)
+[![Go Reference](https://pkg.go.dev/badge/github.com/vottunio/sdl-core-go.svg)](https://pkg.go.dev/github.com/vottunio/sdk-core-go)
 [![Build Status](https://travis-ci.org/vottunio/log.svg?branch=main)](https://travis-ci.org/vottunio/log)
 [![Go Report Card](https://goreportcard.com/badge/github.com/vottunio/log)](https://goreportcard.com/report/github.com/vottunio/log)
 

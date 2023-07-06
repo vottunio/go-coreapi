@@ -1,7 +1,7 @@
 package coreapi
 
 const (
-	NewWalletUrl                          string = "evm/wallet/custodied/new"
+	NewWalletUrl                          string = "evm/wallet/custodied/new" //New wallet url
 	AccountZeroAddressUrl                 string = "evm/wallet/custodied/address"
 	UsersRegisteredWithCustodiedWalletUrl string = "evm/wallet/custodied/list"
 	WalletSeedPhraseUrl                   string = "evm/wallet/custodied/user/wallet"
