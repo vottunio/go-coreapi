@@ -4,14 +4,12 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-
-	"github.com/vottun-com/ethereum/loginweb3"
 )
 
 // Prepares a web3 message for sign-in with ethereum meeting "ERC-4361: Sign-In with Ethereum"
-func (c *CoreApi) Web3PrepareMessage(requestDto *AccountZeroRequestDTO) (*loginweb3.MessageWeb3Dto, error) {
+func (c *CoreApi) Web3PrepareMessage(requestDto *AccountZeroRequestDTO) (*MessageWeb3DTO, error) {
 
-	var responseDto *loginweb3.MessageWeb3Dto
+	var responseDto *MessageWeb3DTO
 
 	err := c.sendCoreTransaction(PrepareWeb3MessageUrl, http.MethodPost, &requestDto, &responseDto)
 

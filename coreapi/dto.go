@@ -2,6 +2,8 @@ package coreapi
 
 import (
 	"math/big"
+
+	"github.com/vottun-com/utils/types"
 )
 
 type NewWalletRequestDTO struct {
@@ -60,4 +62,16 @@ type AbiViewOptionsDTO struct {
 	Method          string        `json:"method"`
 	Network         uint64        `json:"blockchainNetwork"`
 	Params          []interface{} `json:"params"`
+}
+
+type MessageWeb3DTO struct {
+	Domain         string         `json:"domain"`
+	WalletAddress  string         `json:"walletAddress"`
+	ChainID        uint16         `json:"chainId"`
+	Statement      string         `json:"statement"`
+	Uri            string         `json:"uri"`
+	IssuedAt       *int64         `json:"issuedAt:omitempty"`
+	Version        *string        `json:"version:omitempty"`
+	Nonce          *types.SqlUuid `json:"Nonce:omitempty"`
+	ExpirationTime *int64         `json:"expirationTime:omitempty"`
 }
