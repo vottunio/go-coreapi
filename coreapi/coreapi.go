@@ -44,7 +44,7 @@ func (c *CoreApi) AccountZeroAddress(requestDto *AccountZeroRequestDTO) (*Accoun
 	err := c.sendCoreTransaction(AccountZeroAddressUrl, http.MethodGet, &requestDto, &responseDto)
 
 	if err != nil {
-		log.Printf("An error has raised calling core api Create New Custodied Wallet. %+v", err)
+		log.Printf("An error has raised calling core api AccountZeroAddress. %+v", err)
 		return nil, err
 	}
 
@@ -72,7 +72,7 @@ func (c *CoreApi) UserMnemonic(requestDto *UserWalletSeedRequestDTO) (*UserWalle
 	err := c.sendCoreTransaction(WalletSeedPhraseUrl, http.MethodGet, &requestDto, &responseDto)
 
 	if err != nil {
-		log.Printf("An error has raised calling core api Create New Custodied Wallet. %+v", err)
+		log.Printf("An error has raised calling core api UserMnemonic. %+v", err)
 		return nil, err
 	}
 
@@ -80,13 +80,13 @@ func (c *CoreApi) UserMnemonic(requestDto *UserWalletSeedRequestDTO) (*UserWalle
 }
 
 // Sends a custodied wallet mutable transaction
-func (c *CoreApi) SendCustodiedWalleetMutableTransaction(requestDto *AbiMutableRequestDTO) (*AbiMutableResponseDTO, error) {
+func (c *CoreApi) SendCustodiedWalletMutableTransaction(requestDto *AbiMutableRequestDTO) (*AbiMutableResponseDTO, error) {
 	var responseDto *AbiMutableResponseDTO
 
 	err := c.sendCoreTransaction(CustodiedWalletCoreMutableUrl, http.MethodPost, &requestDto, &responseDto)
 
 	if err != nil {
-		log.Printf("An error has raised calling core api Create New Custodied Wallet. %+v", err)
+		log.Printf("An error has raised calling core api SendCustodiedWalletMutableTransaction. %+v", err)
 		return nil, err
 	}
 
@@ -113,7 +113,7 @@ func (c *CoreApi) SendViewTransaction(requestDto *AbiViewOptionsDTO) ([]interfac
 	err := c.sendCoreTransaction(CoreViewUrl, http.MethodGet, &requestDto, &responseDto)
 
 	if err != nil {
-		log.Printf("An error has raised calling core api Create New Custodied Wallet. %+v", err)
+		log.Printf("An error has raised calling core api SendViewTransaction. %+v", err)
 		return nil, err
 	}
 
