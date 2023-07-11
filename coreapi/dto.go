@@ -70,8 +70,13 @@ type MessageWeb3DTO struct {
 	ChainID        uint16         `json:"chainId"`
 	Statement      string         `json:"statement"`
 	Uri            string         `json:"uri"`
-	IssuedAt       *int64         `json:"issuedAt:omitempty"`
+	IssuedAt       int64          `json:"issuedAt"`
 	Version        *string        `json:"version:omitempty"`
 	Nonce          *types.SqlUuid `json:"Nonce:omitempty"`
 	ExpirationTime *int64         `json:"expirationTime:omitempty"`
+}
+
+type MessageWeb3ResponseDTO struct {
+	Domain string `json:"message"`
+	Nonce  string `json:"nonce"`
 }

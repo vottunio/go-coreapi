@@ -7,9 +7,9 @@ import (
 )
 
 // Prepares a web3 message for sign-in with ethereum meeting "ERC-4361: Sign-In with Ethereum"
-func (c *CoreApi) Web3PrepareMessage(requestDto *MessageWeb3DTO) (*MessageWeb3DTO, error) {
+func (c *CoreApi) Web3PrepareMessage(requestDto *MessageWeb3DTO) (*MessageWeb3ResponseDTO, error) {
 
-	var responseDto *MessageWeb3DTO
+	var responseDto *MessageWeb3ResponseDTO
 
 	err := c.sendCoreTransaction(PrepareWeb3MessageUrl, http.MethodPost, &requestDto, &responseDto)
 
