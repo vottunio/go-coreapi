@@ -77,6 +77,6 @@ type MessageWeb3DTO struct {
 }
 
 type MessageWeb3ResponseDTO struct {
-	Domain string `json:"message"`
-	Nonce  string `json:"nonce"`
+	Message string `json:"message"`
+	Nonce   string `json:"nonce"`
 }
