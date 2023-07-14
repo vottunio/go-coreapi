@@ -15,6 +15,22 @@ type AccountZeroResponseDTO struct {
 	AccountAddress string `json:"accountAddress"`
 }
 
+type ContractDeployRequestDTO struct {
+	ContractSpecsID uint64        `json:"contractSpecsId"`
+	WalletAddress   string        `json:"walletAddress,omitempty"`
+	Network         uint64        `json:"blockchainNetwork"`
+	GasLimit        uint64        `json:"gasLimit"`
+	GasPrice        *big.Int      `json:"gasPrice"`
+	Nonce           *uint64       `json:"nonce"`
+	Alias           *string       `json:"alias"`
+	Params          []interface{} `json:"params"`
+}
+
+type ContractDeployResponseDTO struct {
+	ContractAddress string `json:"contractAddress"`
+	TxHash          string `json:"txAddress"`
+}
+
 type AbiMutableRequestDTO struct {
 	ContractAddress string        `json:"contractAddress"`
 	Sender          string        `json:"sender"`

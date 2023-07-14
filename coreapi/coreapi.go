@@ -21,6 +21,21 @@ func New(tokenAuth, appID, rootUrl string) CoreApi {
 	return CoreApi{tokenAuth: tokenAuth, appID: appID, RootUrl: rootUrl}
 }
 
+// Deploys a new contract
+func (c *CoreApi) DeployNewContract(requestDto *ContractDeployRequestDTO) (*ContractDeployResponseDTO, error) {
+
+	var responseDto *ContractDeployResponseDTO
+
+	err := c.sendCoreTransaction(ContractDeployUrl, http.MethodPost, &requestDto, &responseDto)
+
+	if err != nil {
+		log.Printf("An error has raised calling core api Create New Custodied Wallet. %+v", err)
+		return nil, err
+	}
+
+	return responseDto, nil
+}
+
 // Creates a new custodied wallet for a new user
 func (c *CoreApi) CreateNewCustodiedWallet(requestDto *NewWalletRequestDTO) (*AccountZeroResponseDTO, error) {
 
