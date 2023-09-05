@@ -6,10 +6,11 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"net/url"
 	"time"
+
+	"github.com/vottun-com/utils/log"
 )
 
 const (
@@ -28,29 +29,34 @@ type ErrorDTO struct {
 type SetReqHeaders func(req *http.Request, tokenAuth string, appID string)
 
 type RequestApiEndpointInfo struct {
-	EndpointUrl  string
-	RequestData  interface{}
-	ResponseData interface{}
-	HttpMethod   string
-	TokenAuth    string
-	AppID        string
+	EndpointUrl    string
+	RequestData    interface{}
+	ResponseData   interface{}
+	HttpMethod     string
+	TokenAuth      string
+	AppID          string
+	ResponseStatus int
 }
 
-func RequestApiEndpoint(r *RequestApiEndpointInfo, setReqHeaders SetReqHeaders) error {
+func RequestApiEndpoint(r *RequestApiEndpointInfo, setReqHeaders SetReqHeaders, parseRequest, parseResponse bool) error {
 	var req *http.Request
 	var res *http.Response
-	var statuscode int
+	var statuscode int = 0
 	var requestDataBuffer *bytes.Buffer
 
 	if _, err := url.Parse(r.EndpointUrl); err == nil {
-		if r.RequestData != nil {
+		if parseRequest {
 			b, err := json.Marshal(r.RequestData)
 			if err != nil {
 				log.Printf("An error was raised marshalling request data. %v", err)
 				return err
 			}
 			requestDataBuffer = bytes.NewBuffer(b)
+		} else {
+			requestDataBuffer = &bytes.Buffer{}
 		}
+
+		// log.Printf("Sending post request to validate token and app for token %s, customer id %s and app secret %s", jti, customerID, appSecret)
 
 		if req, err = http.NewRequest(r.HttpMethod, r.EndpointUrl, requestDataBuffer); err == nil {
 			setReqHeaders(req, r.TokenAuth, r.AppID)
@@ -63,16 +69,22 @@ func RequestApiEndpoint(r *RequestApiEndpointInfo, setReqHeaders SetReqHeaders) 
 				defer res.Body.Close()
 				body, _ := io.ReadAll(res.Body)
 				statuscode = res.StatusCode
-				log.Printf("Received statuscode %d", statuscode)
+				log.Tracef("Received statuscode %d", statuscode)
 				switch statuscode {
-				case http.StatusOK, http.StatusCreated:
-					if r.ResponseData != nil {
+				case http.StatusOK, http.StatusCreated, http.StatusAccepted:
+					if res.Header.Get("Content-Type") == "image/png" {
+						kk := make([]byte, len(body))
+						copy(kk, body)
+						r.ResponseData = &kk
+
+					} else if parseResponse {
 						err = json.Unmarshal(body, &r.ResponseData)
 						if err != nil {
 							log.Printf("Error unmarshaling token information received from api: %+v", err)
 							return errors.New(ErrorParsingJson)
 						}
 					}
+					r.ResponseStatus = statuscode
 					return nil
 
 				case http.StatusUnauthorized:

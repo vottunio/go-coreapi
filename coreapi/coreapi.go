@@ -26,7 +26,18 @@ func (c *CoreApi) DeployNewContract(requestDto *ContractDeployRequestDTO) (*Cont
 
 	var responseDto *ContractDeployResponseDTO
 
-	err := c.sendCoreTransaction(ContractDeployUrl, http.MethodPost, &requestDto, &responseDto)
+	err := c.sendCoreTransaction(
+		&SendCoreTransactionModel{
+			Url:           ContractDeployUrl,
+			HttpMethod:    http.MethodPost,
+			RequestDto:    &requestDto,
+			ResponseDto:   &responseDto,
+			TokenAuth:     c.tokenAuth,
+			AppID:         c.appID,
+			ParseRequest:  true,
+			ParseResponse: true,
+		},
+	)
 
 	if err != nil {
 		log.Printf("An error has raised calling core api Create New Custodied Wallet. %+v", err)
@@ -41,8 +52,18 @@ func (c *CoreApi) CreateNewCustodiedWallet(requestDto *NewWalletRequestDTO) (*Ac
 
 	var responseDto *AccountZeroResponseDTO
 
-	err := c.sendCoreTransaction(NewWalletUrl, http.MethodPost, &requestDto, &responseDto)
-
+	err := c.sendCoreTransaction(
+		&SendCoreTransactionModel{
+			Url:           NewWalletUrl,
+			HttpMethod:    http.MethodPost,
+			RequestDto:    &requestDto,
+			ResponseDto:   &responseDto,
+			TokenAuth:     c.tokenAuth,
+			AppID:         c.appID,
+			ParseRequest:  true,
+			ParseResponse: true,
+		},
+	)
 	if err != nil {
 		log.Printf("An error has raised calling core api Create New Custodied Wallet. %+v", err)
 		return nil, err
@@ -56,8 +77,18 @@ func (c *CoreApi) AccountZeroAddress(requestDto *AccountZeroRequestDTO) (*Accoun
 
 	var responseDto *AccountZeroResponseDTO
 
-	err := c.sendCoreTransaction(AccountZeroAddressUrl, http.MethodGet, &requestDto, &responseDto)
-
+	err := c.sendCoreTransaction(
+		&SendCoreTransactionModel{
+			Url:           AccountZeroAddressUrl,
+			HttpMethod:    http.MethodGet,
+			RequestDto:    &requestDto,
+			ResponseDto:   &responseDto,
+			TokenAuth:     c.tokenAuth,
+			AppID:         c.appID,
+			ParseRequest:  true,
+			ParseResponse: true,
+		},
+	)
 	if err != nil {
 		log.Printf("An error has raised calling core api AccountZeroAddress. %+v", err)
 		return nil, err
@@ -70,7 +101,19 @@ func (c *CoreApi) AccountZeroAddress(requestDto *AccountZeroRequestDTO) (*Accoun
 func (c *CoreApi) ListUserInfo(offset, rows uint32) (response *[]UserInfotDTO, err error) {
 
 	url := fmt.Sprintf("%s?o=%d&n=%d", UsersRegisteredWithCustodiedWalletUrl, offset, rows)
-	err = c.sendCoreTransaction(url, http.MethodGet, nil, &response)
+
+	err = c.sendCoreTransaction(
+		&SendCoreTransactionModel{
+			Url:           url,
+			HttpMethod:    http.MethodGet,
+			RequestDto:    nil,
+			ResponseDto:   &response,
+			TokenAuth:     c.tokenAuth,
+			AppID:         c.appID,
+			ParseRequest:  false,
+			ParseResponse: true,
+		},
+	)
 	if err != nil {
 		log.Printf("An error has raised listing customer users. %+v", err)
 		return nil, err
@@ -84,8 +127,18 @@ func (c *CoreApi) UserMnemonic(requestDto *UserWalletSeedRequestDTO) (*UserWalle
 
 	var responseDto *UserWalletSeedResponseDTO
 
-	err := c.sendCoreTransaction(WalletSeedPhraseUrl, http.MethodGet, &requestDto, &responseDto)
-
+	err := c.sendCoreTransaction(
+		&SendCoreTransactionModel{
+			Url:           WalletSeedPhraseUrl,
+			HttpMethod:    http.MethodGet,
+			RequestDto:    &requestDto,
+			ResponseDto:   &responseDto,
+			TokenAuth:     c.tokenAuth,
+			AppID:         c.appID,
+			ParseRequest:  true,
+			ParseResponse: true,
+		},
+	)
 	if err != nil {
 		log.Printf("An error has raised calling core api UserMnemonic. %+v", err)
 		return nil, err
@@ -98,8 +151,18 @@ func (c *CoreApi) UserMnemonic(requestDto *UserWalletSeedRequestDTO) (*UserWalle
 func (c *CoreApi) SendCustodiedWalletMutableTransaction(requestDto *AbiMutableRequestDTO) (*AbiMutableResponseDTO, error) {
 	var responseDto *AbiMutableResponseDTO
 
-	err := c.sendCoreTransaction(CustodiedWalletCoreMutableUrl, http.MethodPost, &requestDto, &responseDto)
-
+	err := c.sendCoreTransaction(
+		&SendCoreTransactionModel{
+			Url:           CustodiedWalletCoreMutableUrl,
+			HttpMethod:    http.MethodPost,
+			RequestDto:    &requestDto,
+			ResponseDto:   &responseDto,
+			TokenAuth:     c.tokenAuth,
+			AppID:         c.appID,
+			ParseRequest:  true,
+			ParseResponse: true,
+		},
+	)
 	if err != nil {
 		log.Printf("An error has raised calling core api SendCustodiedWalletMutableTransaction. %+v", err)
 		return nil, err
@@ -112,7 +175,18 @@ func (c *CoreApi) SendCustodiedWalletMutableTransaction(requestDto *AbiMutableRe
 func (c *CoreApi) SendMutableTransaction(requestDto *AbiMutableRequestDTO) (*AbiMutableResponseDTO, error) {
 	var responseDto *AbiMutableResponseDTO
 
-	err := c.sendCoreTransaction(CoreMutableUrl, http.MethodPost, &requestDto, &responseDto)
+	err := c.sendCoreTransaction(
+		&SendCoreTransactionModel{
+			Url:           CoreMutableUrl,
+			HttpMethod:    http.MethodPost,
+			RequestDto:    &requestDto,
+			ResponseDto:   &responseDto,
+			TokenAuth:     c.tokenAuth,
+			AppID:         c.appID,
+			ParseRequest:  true,
+			ParseResponse: true,
+		},
+	)
 
 	if err != nil {
 		log.Printf("An error has raised calling core api sending mutable transaction. %+v", err)
@@ -125,7 +199,18 @@ func (c *CoreApi) SendMutableTransaction(requestDto *AbiMutableRequestDTO) (*Abi
 func (c *CoreApi) SendViewTransaction(requestDto *AbiViewOptionsDTO) ([]interface{}, error) {
 	var responseDto []interface{}
 
-	err := c.sendCoreTransaction(CoreViewUrl, http.MethodGet, &requestDto, &responseDto)
+	err := c.sendCoreTransaction(
+		&SendCoreTransactionModel{
+			Url:           CoreViewUrl,
+			HttpMethod:    http.MethodGet,
+			RequestDto:    &requestDto,
+			ResponseDto:   &responseDto,
+			TokenAuth:     c.tokenAuth,
+			AppID:         c.appID,
+			ParseRequest:  true,
+			ParseResponse: true,
+		},
+	)
 
 	if err != nil {
 		log.Printf("An error has raised calling core api SendViewTransaction. %+v", err)
@@ -135,10 +220,21 @@ func (c *CoreApi) SendViewTransaction(requestDto *AbiViewOptionsDTO) ([]interfac
 	return responseDto, nil
 }
 
-func (c *CoreApi) TransferNetworkNativeCrypto(requestDto *AbiMutableRequestDTO) (*AbiMutableResponseDTO, error) {
+func (c *CoreApi) transferNetworkNativeCrypto(requestDto *AbiMutableRequestDTO) (*AbiMutableResponseDTO, error) {
 	var responseDto *AbiMutableResponseDTO
 
-	err := c.sendCoreTransaction(TransferNativeNetworkCryptoUrl, http.MethodPost, &requestDto, &responseDto)
+	err := c.sendCoreTransaction(
+		&SendCoreTransactionModel{
+			Url:           TransferNativeNetworkCryptoUrl,
+			HttpMethod:    http.MethodPost,
+			RequestDto:    &requestDto,
+			ResponseDto:   &responseDto,
+			TokenAuth:     c.tokenAuth,
+			AppID:         c.appID,
+			ParseRequest:  true,
+			ParseResponse: true,
+		},
+	)
 
 	if err != nil {
 		log.Printf("An error has raised calling core api to transfer networknative crypto. %+v", err)

@@ -1,4 +1,4 @@
-module github.com/vottunio/sdk-core-go
+module github.com/vottunio/go-coreapi
 
 go 1.18
 
