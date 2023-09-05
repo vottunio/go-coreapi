@@ -17,7 +17,7 @@ type AccountZeroResponseDTO struct {
 
 type ContractDeployRequestDTO struct {
 	ContractSpecsID uint64        `json:"contractSpecsId"`
-	WalletAddress   string        `json:"walletAddress,omitempty"`
+	WalletAddress   string        `json:"sender,omitempty"`
 	Network         uint64        `json:"blockchainNetwork"`
 	GasLimit        uint64        `json:"gasLimit"`
 	GasPrice        *big.Int      `json:"gasPrice"`
