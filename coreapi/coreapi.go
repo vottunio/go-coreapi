@@ -13,12 +13,12 @@ type CoreApi struct {
 	appID     string
 }
 
-func New(tokenAuth, appID, rootUrl string) CoreApi {
+func New(tokenAuth, appID, rootUrl string) *CoreApi {
 	if !strings.HasSuffix(rootUrl, "/") {
 		rootUrl += "/"
 	}
 
-	return CoreApi{tokenAuth: tokenAuth, appID: appID, RootUrl: rootUrl}
+	return &CoreApi{tokenAuth: tokenAuth, appID: appID, RootUrl: rootUrl}
 }
 
 // Deploys a new contract
@@ -220,7 +220,7 @@ func (c *CoreApi) SendViewTransaction(requestDto *AbiViewOptionsDTO) ([]interfac
 	return responseDto, nil
 }
 
-func (c *CoreApi) transferNetworkNativeCrypto(requestDto *AbiMutableRequestDTO) (*AbiMutableResponseDTO, error) {
+func (c *CoreApi) TransferNetworkNativeCrypto(requestDto *AbiMutableRequestDTO) (*AbiMutableResponseDTO, error) {
 	var responseDto *AbiMutableResponseDTO
 
 	err := c.sendCoreTransaction(

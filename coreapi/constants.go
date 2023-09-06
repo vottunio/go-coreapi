@@ -8,7 +8,7 @@ const (
 	WalletSeedPhraseUrl                   string = "evm/wallet/custodied/user/wallet"
 	CustodiedWalletCoreMutableUrl         string = "evm/wallet/custodied/transact/mutable"
 	CoreMutableUrl                        string = "evm/transact/mutable"
-	TransferNativeNetworkCryptoUrl        string = "evm/transact/transfer"
+	TransferNativeNetworkCryptoUrl        string = "evm/chain/transfer"
 	CoreViewUrl                           string = "evm/transact/view"
 	PrepareWeb3MessageUrl                 string = "login/web3/prepare"
 	ValidateWeb3SignatureUrl              string = "login/web3/validate?nonce=%s&signature=%s"

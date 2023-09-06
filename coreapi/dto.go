@@ -20,10 +20,10 @@ type ContractDeployRequestDTO struct {
 	WalletAddress   string        `json:"sender,omitempty"`
 	Network         uint64        `json:"blockchainNetwork"`
 	GasLimit        uint64        `json:"gasLimit"`
-	GasPrice        *big.Int      `json:"gasPrice"`
-	Nonce           *uint64       `json:"nonce"`
-	Alias           *string       `json:"alias"`
-	Params          []interface{} `json:"params"`
+	GasPrice        *big.Int      `json:"gasPrice,omitempty"`
+	Nonce           *uint64       `json:"nonce,omitempty"`
+	Alias           *string       `json:"alias,omitempty"`
+	Params          []interface{} `json:"params,omitempty"`
 }
 
 type ContractDeployResponseDTO struct {
@@ -32,16 +32,16 @@ type ContractDeployResponseDTO struct {
 }
 
 type AbiMutableRequestDTO struct {
-	ContractAddress string        `json:"contractAddress"`
+	ContractAddress *string       `json:"contractAddress,omitempty"`
 	Sender          string        `json:"sender"`
 	Recipient       *string       `json:"recipient,omitempty"`
-	Method          string        `json:"method"`
-	Nonce           *uint64       `json:"nonce"`
+	Method          *string       `json:"method,omitempty"`
+	Nonce           *uint64       `json:"nonce,omitempty"`
 	Network         uint64        `json:"blockchainNetwork"`
-	Gas             uint64        `json:"gas"`
-	GasPrice        *big.Int      `json:"gasPrice"`
-	Value           uint64        `json:"value"`
-	Params          []interface{} `json:"params"`
+	Gas             *uint64       `json:"gas,omitempty"`
+	GasPrice        *big.Int      `json:"gasPrice,omitempty"`
+	Value           *big.Int      `json:"value,omitempty"`
+	Params          []interface{} `json:"params,omitempty"`
 	SpecsID         *uint64       `json:"contractSpecsId,omitempty"`
 	Pin             *string       `json:"pin,omitempty"`
 }
