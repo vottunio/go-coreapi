@@ -5,6 +5,8 @@ import (
 	"log"
 	"net/http"
 	"strings"
+
+	"github.com/ethereum/go-ethereum/common"
 )
 
 type CoreApi struct {
@@ -220,6 +222,28 @@ func (c *CoreApi) SendViewTransaction(requestDto *AbiViewOptionsDTO) ([]interfac
 	return responseDto, nil
 }
 
+func (c *CoreApi) GetChainBalance(account common.Address, networkID uint64) (*GetChainBalanceResponseDTO, error) {
+	responseDto := &GetChainBalanceResponseDTO{}
+
+	err := c.sendCoreTransaction(
+		&SendCoreTransactionModel{
+			Url:           fmt.Sprintf(GetChainBalanceUrl, account, networkID),
+			HttpMethod:    http.MethodGet,
+			ResponseDto:   responseDto,
+			TokenAuth:     c.tokenAuth,
+			AppID:         c.appID,
+			ParseRequest:  false,
+			ParseResponse: true,
+		},
+	)
+
+	if err != nil {
+		log.Printf("An error has raised calling core api Chain Balance for account {%s} and network {%d}. %+v", account, networkID, err)
+		return nil, err
+	}
+
+	return responseDto, nil
+}
 func (c *CoreApi) TransferNetworkNativeCrypto(requestDto *AbiMutableRequestDTO) (*AbiMutableResponseDTO, error) {
 	var responseDto *AbiMutableResponseDTO
 

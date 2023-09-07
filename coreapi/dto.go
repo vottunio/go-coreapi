@@ -96,3 +96,7 @@ type MessageWeb3ResponseDTO struct {
 	Message string `json:"message"`
 	Nonce   string `json:"nonce"`
 }
+
+type GetChainBalanceResponseDTO struct {
+	Balance float64 `json:"balance"`
+}

@@ -12,6 +12,7 @@ const (
 	CoreViewUrl                           string = "evm/transact/view"
 	PrepareWeb3MessageUrl                 string = "login/web3/prepare"
 	ValidateWeb3SignatureUrl              string = "login/web3/validate?nonce=%s&signature=%s"
+	GetChainBalanceUrl                    string = "evm/chain/%s/balance?network=%d"
 )
 
 const (
