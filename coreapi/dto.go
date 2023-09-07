@@ -100,3 +100,17 @@ type MessageWeb3ResponseDTO struct {
 type GetChainBalanceResponseDTO struct {
 	Balance float64 `json:"balance"`
 }
+type BlockchainClientDTO struct {
+	ID            uint64  `json:"id"`
+	Name          string  `json:"name"`
+	Mainnet       bool    `json:"isMainnet"`
+	Explorer      *string `json:"explorer"`
+	TestnetFaucet *string `json:"testnetFaucet"`
+	TypeID        uint64  `json:"typeId"`
+	TypeName      string  `json:"typeName"`
+}
+
+type ChainsListDTO struct {
+	Mainnet []BlockchainClientDTO `json:"mainnetNetworks"`
+	Testnet []BlockchainClientDTO `json:"testnetNetworks"`
+}

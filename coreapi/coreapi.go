@@ -267,3 +267,27 @@ func (c *CoreApi) TransferNetworkNativeCrypto(requestDto *AbiMutableRequestDTO) 
 
 	return responseDto, nil
 }
+
+func (c *CoreApi) GetBlockchains() (*ChainsListDTO, error) {
+
+	responseDto := &ChainsListDTO{}
+
+	err := c.sendCoreTransaction(
+		&SendCoreTransactionModel{
+			Url:           GetBlockchains,
+			HttpMethod:    http.MethodGet,
+			ResponseDto:   responseDto,
+			TokenAuth:     c.tokenAuth,
+			AppID:         c.appID,
+			ParseRequest:  false,
+			ParseResponse: true,
+		},
+	)
+
+	if err != nil {
+		log.Printf("An error has raised getting blockchains. %+v", err)
+		return nil, err
+	}
+
+	return responseDto, nil
+}
