@@ -291,3 +291,28 @@ func (c *CoreApi) GetBlockchains() (*ChainsListDTO, error) {
 
 	return responseDto, nil
 }
+
+func (c *CoreApi) GetGasPrice(gasprice *GasPriceRequestDTO) (*GasPriceResponseDTO, error) {
+
+	responseDto := &GasPriceResponseDTO{}
+
+	err := c.sendCoreTransaction(
+		&SendCoreTransactionModel{
+			Url:           GetGasPrice,
+			HttpMethod:    http.MethodGet,
+			RequestDto:    gasprice,
+			ResponseDto:   &responseDto,
+			TokenAuth:     c.tokenAuth,
+			AppID:         c.appID,
+			ParseRequest:  true,
+			ParseResponse: true,
+		},
+	)
+
+	if err != nil {
+		log.Printf("An error has raised getting gasprice. %+v", err)
+		return nil, err
+	}
+
+	return responseDto, nil
+}

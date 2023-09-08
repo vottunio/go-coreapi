@@ -14,6 +14,7 @@ const (
 	ValidateWeb3SignatureUrl              string = "login/web3/validate?nonce=%s&signature=%s"
 	GetChainBalanceUrl                    string = "evm/chain/%s/balance?network=%d"
 	GetBlockchains                        string = "evm/info/chains"
+	GetGasPrice                           string = "evm/network/gasprice"
 )
 
 const (

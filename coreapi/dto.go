@@ -114,3 +114,11 @@ type ChainsListDTO struct {
 	Mainnet []BlockchainClientDTO `json:"mainnetNetworks"`
 	Testnet []BlockchainClientDTO `json:"testnetNetworks"`
 }
+
+type GasPriceRequestDTO struct {
+	Network uint64 `json:"blockchainNetwork"`
+}
+
+type GasPriceResponseDTO struct {
+	GasPrice float64 `json:"gasPriceGwei"`
+}
