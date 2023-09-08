@@ -103,6 +103,7 @@ type GetChainBalanceResponseDTO struct {
 type BlockchainClientDTO struct {
 	ID            uint64  `json:"id"`
 	Name          string  `json:"name"`
+	TokenSymbol   string  `json:"symbol"`
 	Mainnet       bool    `json:"isMainnet"`
 	Explorer      *string `json:"explorer"`
 	TestnetFaucet *string `json:"testnetFaucet"`
