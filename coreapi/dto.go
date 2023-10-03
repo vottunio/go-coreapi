@@ -28,7 +28,7 @@ type ContractDeployRequestDTO struct {
 
 type ContractDeployResponseDTO struct {
 	ContractAddress string `json:"contractAddress"`
-	TxHash          string `json:"txAddress"`
+	TxHash          string `json:"txHash"`
 }
 
 type AbiMutableRequestDTO struct {
