@@ -298,13 +298,12 @@ func (c *CoreApi) GetGasPrice(gasprice *GasPriceRequestDTO) (*GasPriceResponseDT
 
 	err := c.sendCoreTransaction(
 		&SendCoreTransactionModel{
-			Url:           GetGasPrice,
+			Url:           fmt.Sprintf(GetGasPrice, gasprice.Network),
 			HttpMethod:    http.MethodGet,
-			RequestDto:    gasprice,
 			ResponseDto:   &responseDto,
 			TokenAuth:     c.tokenAuth,
 			AppID:         c.appID,
-			ParseRequest:  true,
+			ParseRequest:  false,
 			ParseResponse: true,
 		},
 	)
