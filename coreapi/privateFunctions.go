@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"reflect"
 
-	"github.com/vottun-com/utils/log"
 	"github.com/vottunio/go-coreapi/apiwrapper"
+	"github.com/vottunio/log"
 )
 
 type SendCoreTransactionModel struct {

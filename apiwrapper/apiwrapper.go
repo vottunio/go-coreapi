@@ -10,7 +10,7 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/vottun-com/utils/log"
+	"github.com/vottunio/log"
 )
 
 const (

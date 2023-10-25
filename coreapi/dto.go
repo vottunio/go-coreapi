@@ -3,7 +3,7 @@ package coreapi
 import (
 	"math/big"
 
-	"github.com/vottun-com/utils/types"
+	"github.com/vottunio/go-coreapi/types"
 )
 
 type NewWalletRequestDTO struct {
