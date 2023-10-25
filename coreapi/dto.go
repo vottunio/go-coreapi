@@ -75,6 +75,7 @@ type UserInfotDTO struct {
 
 type AbiViewOptionsDTO struct {
 	ContractAddress string        `json:"contractAddress"`
+	SpecsID         *uint64       `json:"contractSpecsId,omitempty"`
 	Method          string        `json:"method"`
 	Network         uint64        `json:"blockchainNetwork"`
 	Params          []interface{} `json:"params"`
