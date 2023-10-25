@@ -149,13 +149,13 @@ func (c *CoreApi) UserMnemonic(requestDto *UserWalletSeedRequestDTO) (*UserWalle
 	return responseDto, nil
 }
 
-// Sends a custodied wallet mutable transaction
-func (c *CoreApi) SendCustodiedWalletMutableTransaction(requestDto *AbiMutableRequestDTO) (*AbiMutableResponseDTO, error) {
+// Sends a custodied wallet mutable transaction. It is required to set the Pin in the AbiMutableRequestDTO.
+func (c *CoreApi) CustodiedWalletMutableTransaction(requestDto *AbiMutableRequestDTO, strategy uint64) (*AbiMutableResponseDTO, error) {
 	var responseDto *AbiMutableResponseDTO
 
 	err := c.sendCoreTransaction(
 		&SendCoreTransactionModel{
-			Url:           CustodiedWalletCoreMutableUrl,
+			Url:           fmt.Sprintf(CustodiedWalletCoreMutableUrl, strategy),
 			HttpMethod:    http.MethodPost,
 			RequestDto:    &requestDto,
 			ResponseDto:   &responseDto,
@@ -222,6 +222,7 @@ func (c *CoreApi) SendViewTransaction(requestDto *AbiViewOptionsDTO) ([]interfac
 	return responseDto, nil
 }
 
+// Returns the Chain Balance for a given account and a given blockchain network
 func (c *CoreApi) GetChainBalance(account common.Address, networkID uint64) (*GetChainBalanceResponseDTO, error) {
 	responseDto := &GetChainBalanceResponseDTO{}
 
@@ -268,6 +269,30 @@ func (c *CoreApi) TransferNetworkNativeCrypto(requestDto *AbiMutableRequestDTO) 
 	return responseDto, nil
 }
 
+// Sends a Custodied Wallet Transfer Network Native Crypto. It is required to set the Pin in the AbiMutableRequestDTO.
+func (c *CoreApi) CustodiedWalletTransferNetworkNativeCrypto(requestDto *AbiMutableRequestDTO, strategy uint64) (*AbiMutableResponseDTO, error) {
+	var responseDto *AbiMutableResponseDTO
+
+	err := c.sendCoreTransaction(
+		&SendCoreTransactionModel{
+			Url:           fmt.Sprintf(CustodiedWalletTransferNativeNetworkCryptoUrl, strategy),
+			HttpMethod:    http.MethodPost,
+			RequestDto:    &requestDto,
+			ResponseDto:   &responseDto,
+			TokenAuth:     c.tokenAuth,
+			AppID:         c.appID,
+			ParseRequest:  true,
+			ParseResponse: true,
+		},
+	)
+
+	if err != nil {
+		log.Printf("An error has raised calling core api to transfer networknative crypto. %+v", err)
+		return nil, err
+	}
+
+	return responseDto, nil
+}
 func (c *CoreApi) GetBlockchains() (*ChainsListDTO, error) {
 
 	responseDto := &ChainsListDTO{}
