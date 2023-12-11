@@ -3,6 +3,7 @@ package coreapi
 import (
 	"math/big"
 
+	"github.com/vottun-com/ethereum"
 	"github.com/vottunio/go-coreapi/types"
 )
 
@@ -123,4 +124,26 @@ type GasPriceRequestDTO struct {
 
 type GasPriceResponseDTO struct {
 	GasPrice float64 `json:"gasPriceGwei"`
+}
+
+type BlockchainTransactionDTO struct {
+	Network   uint64                       `json:"network"`
+	Tx        *ethereum.Transaction        `json:"transaction"`
+	Receipt   *ethereum.TransactionReceipt `json:"receipt"`
+	Fees      *TransactionFees             `json:"transactionFees,omitempty"`
+	Error     bool                         `json:"error"`
+	ErrorInfo ErrorDTO                     `json:"errorInfo"`
+}
+
+type TransactionFees struct {
+	Currency string `json:"currency"`
+	// TodayValue  float64 `json:"todayPrice"`
+	// ValueAtDate float64 `json:"priceAtTxDate"`
+	VottunFee float64 `json:"fee"`
+}
+
+type ErrorDTO struct {
+	Code string `json:"code"`
+
+	Message string `json:"message"`
 }

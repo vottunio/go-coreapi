@@ -16,6 +16,7 @@ const (
 	GetChainBalanceUrl                            string = "evm/chain/%s/balance?network=%d"
 	GetBlockchains                                string = "evm/info/chains"
 	GetGasPrice                                   string = "evm/network/gasprice?network=%d"
+	GetTxInfo                                     string = "evm/info/transaction/%s?network=%d"
 )
 
 const (

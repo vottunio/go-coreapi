@@ -340,3 +340,28 @@ func (c *CoreApi) GetGasPrice(gasprice *GasPriceRequestDTO) (*GasPriceResponseDT
 
 	return responseDto, nil
 }
+
+func (c *CoreApi) GetTxInfo(chainId uint64, txHash string) (*BlockchainTransactionDTO, error) {
+
+	responseDto := &BlockchainTransactionDTO{}
+
+	err := c.sendCoreTransaction(
+		&SendCoreTransactionModel{
+			Url:           fmt.Sprintf(GetTxInfo, txHash, chainId),
+			HttpMethod:    http.MethodGet,
+			ResponseDto:   &responseDto,
+			TokenAuth:     c.tokenAuth,
+			AppID:         c.appID,
+			ParseRequest:  false,
+			ParseResponse: true,
+		},
+	)
+
+	if err != nil {
+		log.Printf("An error has raised getting tx info. %+v", err)
+		return nil, err
+	}
+
+	return responseDto, nil
+
+}
