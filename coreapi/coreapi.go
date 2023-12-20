@@ -49,6 +49,33 @@ func (c *CoreApi) DeployNewContract(requestDto *ContractDeployRequestDTO) (*Cont
 	return responseDto, nil
 }
 
+// Deploys a new contract
+func (c *CoreApi) DeployNewContractWithJti(jti string, requestDto *ContractDeployRequestDTO) (*ContractDeployResponseDTO, error) {
+
+	var responseDto *ContractDeployResponseDTO
+	url := ContractDeployUrl + "?jti=%s"
+
+	err := c.sendCoreTransaction(
+		&SendCoreTransactionModel{
+			Url:           fmt.Sprintf(url, jti),
+			HttpMethod:    http.MethodPost,
+			RequestDto:    &requestDto,
+			ResponseDto:   &responseDto,
+			TokenAuth:     c.tokenAuth,
+			AppID:         c.appID,
+			ParseRequest:  true,
+			ParseResponse: true,
+		},
+	)
+
+	if err != nil {
+		log.Printf("An error has raised calling core api Create New Custodied Wallet. %+v", err)
+		return nil, err
+	}
+
+	return responseDto, nil
+}
+
 // Creates a new custodied wallet for a new user
 func (c *CoreApi) CreateNewCustodiedWallet(requestDto *NewWalletRequestDTO) (*AccountZeroResponseDTO, error) {
 
