@@ -25,12 +25,30 @@ func New(tokenAuth, appID, rootUrl string) *CoreApi {
 
 // Deploys a new contract
 func (c *CoreApi) DeployNewContract(requestDto *ContractDeployRequestDTO) (*ContractDeployResponseDTO, error) {
+	if result, err := c.deployOrEstimateNewContract(requestDto, ContractDeployUrl); err != nil {
+		log.Printf("An error has raised calling core api for deploying a new smart contract. %+v", err)
+		return nil, err
+	} else {
+		return result, nil
+	}
+}
 
+// Estimates the deploy of a new contract
+func (c *CoreApi) EstimateDeployNewContract(requestDto *ContractDeployRequestDTO) (*ContractDeployResponseDTO, error) {
+	if result, err := c.deployOrEstimateNewContract(requestDto, EstimateContractDeployUrl); err != nil {
+		log.Printf("An error has raised calling core api for estimating the new smart contract deployment. %+v", err)
+		return nil, err
+	} else {
+		return result, nil
+	}
+}
+
+func (c *CoreApi) deployOrEstimateNewContract(requestDto *ContractDeployRequestDTO, url string) (*ContractDeployResponseDTO, error) {
 	var responseDto *ContractDeployResponseDTO
 
 	err := c.sendCoreTransaction(
 		&SendCoreTransactionModel{
-			Url:           ContractDeployUrl,
+			Url:           url,
 			HttpMethod:    http.MethodPost,
 			RequestDto:    &requestDto,
 			ResponseDto:   &responseDto,
@@ -42,7 +60,7 @@ func (c *CoreApi) DeployNewContract(requestDto *ContractDeployRequestDTO) (*Cont
 	)
 
 	if err != nil {
-		log.Printf("An error has raised calling core api Create New Custodied Wallet. %+v", err)
+		log.Printf("An error has raised calling core api for deploying or estimating gas for deploy. %+v", err)
 		return nil, err
 	}
 
