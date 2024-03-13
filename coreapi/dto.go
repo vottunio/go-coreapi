@@ -3,7 +3,7 @@ package coreapi
 import (
 	"math/big"
 
-	"github.com/vottun-com/ethereum"
+	"github.com/vottun-com/ethereum/v2"
 	"github.com/vottunio/go-coreapi/types"
 )
 
