@@ -374,7 +374,7 @@ func (c *CoreApi) GetTxInfo(chainId uint64, txHash string) (*BlockchainTransacti
 
 	err := c.sendCoreTransaction(
 		&SendCoreTransactionModel{
-			Url:           fmt.Sprintf(GetTxInfo, txHash, chainId),
+			Url:           fmt.Sprintf(GetTxInfoUrl, txHash, chainId),
 			HttpMethod:    http.MethodGet,
 			ResponseDto:   &responseDto,
 			TokenAuth:     c.tokenAuth,
@@ -390,5 +390,30 @@ func (c *CoreApi) GetTxInfo(chainId uint64, txHash string) (*BlockchainTransacti
 	}
 
 	return responseDto, nil
+
+}
+
+func (c *CoreApi) IsContract(chainId uint64, address string) (bool, error) {
+
+	responseDto := make(map[string]bool)
+
+	err := c.sendCoreTransaction(
+		&SendCoreTransactionModel{
+			Url:           fmt.Sprintf(IsContractUrl, address, chainId),
+			HttpMethod:    http.MethodGet,
+			ResponseDto:   &responseDto,
+			TokenAuth:     c.tokenAuth,
+			AppID:         c.appID,
+			ParseRequest:  false,
+			ParseResponse: true,
+		},
+	)
+
+	if err != nil {
+		log.Printf("An error has raised checking if the address points to a contract. %+v", err)
+		return false, err
+	}
+
+	return responseDto["isContract"], nil
 
 }
