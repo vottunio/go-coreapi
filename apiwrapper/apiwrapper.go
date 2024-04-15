@@ -3,13 +3,13 @@ package apiwrapper
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
 	"net/url"
 	"time"
 
-	"github.com/vottun-com/utils/errors"
 	"github.com/vottunio/log"
 )
 
@@ -80,14 +80,14 @@ func RequestApiEndpoint(r *RequestApiEndpointInfo, setReqHeaders SetReqHeaders, 
 						err = json.Unmarshal(body, &r.ResponseData)
 						if err != nil {
 							log.Printf("Error unmarshaling token information received from api: %+v", err)
-							return errors.New(ErrorParsingJson, fmt.Sprintf("Error unmarshaling token information received from api: %+v", err))
+							return errors.New(fmt.Sprintf("%s - Error unmarshaling token information received from api: %+v", ErrorParsingJson, err))
 						}
 					}
 					r.ResponseStatus = statuscode
 					return nil
 
 				case http.StatusUnauthorized:
-					return errors.New(ErrorUnauthorized, "The token used in not authorized to perform the requested operation")
+					return errors.New(ErrorUnauthorized + " - The token used in not authorized to perform the requested operation")
 
 				default:
 					errorMsg := ErrorDTO{}
@@ -96,7 +96,7 @@ func RequestApiEndpoint(r *RequestApiEndpointInfo, setReqHeaders SetReqHeaders, 
 						log.Printf("Error unmarshaling token information received from api: %+v", err)
 						return fmt.Errorf(ErrorHttpStatus, statuscode)
 					}
-					return errors.New(errorMsg.Code, errorMsg.Message)
+					return errors.New(errorMsg.Code + " - " + errorMsg.Message)
 				}
 			} else {
 				log.Printf("error executing request with error %+v", err)
@@ -108,6 +108,6 @@ func RequestApiEndpoint(r *RequestApiEndpointInfo, setReqHeaders SetReqHeaders, 
 		}
 	} else {
 		log.Printf("Invalid url or not set")
-		return errors.New(ErrorApiWrapperUrlNotSet, "The url sent is not correct")
+		return errors.New(ErrorApiWrapperUrlNotSet + " - The url sent is not correct")
 	}
 }

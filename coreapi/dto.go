@@ -2,8 +2,8 @@ package coreapi
 
 import (
 	"math/big"
+	"time"
 
-	"github.com/vottun-com/ethereum/v2"
 	"github.com/vottunio/go-coreapi/types"
 )
 
@@ -127,13 +127,61 @@ type GasPriceResponseDTO struct {
 	GasPrice float64 `json:"gasPriceGwei"`
 }
 
+type DecodedTransactionDTO struct {
+	Function   string        `json:"function"`
+	FunctionID string        `json:"functionId"`
+	Inputs     []interface{} `json:"inputs"`
+}
+
+type Transaction struct {
+	Hash               string                 `json:"hash"`
+	Value              float64                `json:"value"`
+	Gas                uint64                 `json:"gas"`
+	GasPrice           uint64                 `json:"gasPrice"`
+	GasTipCap          *big.Int               `json:"gasTipCap"`
+	Nonce              uint64                 `json:"nonce"`
+	From               string                 `json:"from"`
+	To                 string                 `json:"to"`
+	Pending            bool                   `json:"pending"`
+	DecodedTransaction *DecodedTransactionDTO `json:"inputData"`
+}
+type LogTopic struct {
+	Name  string `json:"name"`
+	Value string `json:"value"`
+}
+
+type LogData struct {
+	Name  string      `json:"name"`
+	Value interface{} `json:"value"`
+}
+type TransactionLog struct {
+	Address string     `json:"address"`
+	Name    string     `json:"name"`
+	Topics  []LogTopic `json:"topics"`
+	Data    []LogData  `json:"data"`
+}
+
+type TransactionReceipt struct {
+	Hash              string           `json:"hash"`
+	BlockHash         string           `json:"blockHash"`
+	GasPrice          uint64           `json:"gasPrice"`
+	GasUsed           uint64           `json:"gasUsed"`
+	CumulativeGasUsed uint64           `json:"cumulativeGasUsed"`
+	TokenID           *uint64          `json:"tokenId"`
+	From              string           `json:"from"`
+	To                string           `json:"to"`
+	BlockTime         *time.Time       `json:"blockTime"`
+	Status            uint64           `json:"status"`
+	TransactionLog    []TransactionLog `json:"logs"`
+	ErrorMessage      string           `json:"errorMessage"`
+}
 type BlockchainTransactionDTO struct {
-	Network   uint64                       `json:"network"`
-	Tx        *ethereum.Transaction        `json:"transaction"`
-	Receipt   *ethereum.TransactionReceipt `json:"receipt"`
-	Fees      *TransactionFees             `json:"transactionFees,omitempty"`
-	Error     bool                         `json:"error"`
-	ErrorInfo ErrorDTO                     `json:"errorInfo"`
+	Network   uint64              `json:"network"`
+	Tx        *Transaction        `json:"transaction"`
+	Receipt   *TransactionReceipt `json:"receipt"`
+	Fees      *TransactionFees    `json:"transactionFees,omitempty"`
+	Error     bool                `json:"error"`
+	ErrorInfo ErrorDTO            `json:"errorInfo"`
 }
 
 type TransactionFees struct {
