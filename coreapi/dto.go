@@ -103,14 +103,15 @@ type GetChainBalanceResponseDTO struct {
 	Balance float64 `json:"balance"`
 }
 type BlockchainClientDTO struct {
-	ID            uint64  `json:"id"`
-	Name          string  `json:"name"`
-	TokenSymbol   string  `json:"symbol"`
-	Mainnet       bool    `json:"isMainnet"`
-	Explorer      *string `json:"explorer"`
-	TestnetFaucet *string `json:"testnetFaucet"`
-	TypeID        uint64  `json:"typeId"`
-	TypeName      string  `json:"typeName"`
+	ID                    uint64  `json:"id"`
+	Name                  string  `json:"name"`
+	TokenSymbol           string  `json:"symbol"`
+	Mainnet               bool    `json:"isMainnet"`
+	Explorer              *string `json:"explorer"`
+	TestnetFaucet         *string `json:"testnetFaucet"`
+	TypeID                uint64  `json:"typeId"`
+	ActiveForTransactions bool    `json:"activeForTransactions"`
+	TypeName              string  `json:"typeName"`
 }
 
 type ChainsListDTO struct {
