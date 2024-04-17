@@ -33,18 +33,19 @@ type ContractDeployResponseDTO struct {
 }
 
 type AbiMutableRequestDTO struct {
-	ContractAddress *string       `json:"contractAddress,omitempty"`
-	Sender          string        `json:"sender"`
-	Recipient       *string       `json:"recipient,omitempty"`
-	Method          *string       `json:"method,omitempty"`
-	Nonce           *uint64       `json:"nonce,omitempty"`
-	Network         uint64        `json:"blockchainNetwork"`
-	Gas             *uint64       `json:"gas,omitempty"`
-	GasPrice        *big.Int      `json:"gasPrice,omitempty"`
-	Value           *big.Int      `json:"value,omitempty"`
-	Params          []interface{} `json:"params,omitempty"`
-	SpecsID         *uint64       `json:"contractSpecsId,omitempty"`
-	Pin             *string       `json:"pin,omitempty"`
+	ContractAddress   *string       `json:"contractAddress,omitempty"`
+	Sender            string        `json:"sender"`
+	Recipient         *string       `json:"recipient,omitempty"`
+	Method            *string       `json:"method,omitempty"`
+	Nonce             *uint64       `json:"nonce,omitempty"`
+	Network           uint64        `json:"blockchainNetwork"`
+	Gas               *uint64       `json:"gas,omitempty"`
+	GasPrice          *big.Int      `json:"gasPrice,omitempty"`
+	Value             *big.Int      `json:"value,omitempty"`
+	Params            []interface{} `json:"params,omitempty"`
+	SpecsID           *uint64       `json:"contractSpecsId,omitempty"`
+	Pin               *string       `json:"pin,omitempty"`
+	CustomerReference *string       `json:"customerReference,omitempty"`
 }
 
 type AbiMutableResponseDTO struct {
@@ -145,6 +146,22 @@ type Transaction struct {
 	Pending            bool                   `json:"pending"`
 	DecodedTransaction *DecodedTransactionDTO `json:"inputData"`
 }
+
+type TransactionStatusDTO struct {
+	ID                    *types.SqlUuid `json:"id"`
+	TxHash                *string        `json:"txHash,omitempty"`
+	Network               uint64         `json:"blockchainNetwork"`
+	Status                TxStatus       `json:"status"`
+	ErrorMessage          *string        `json:"error"`
+	CreationTimestamp     int64          `json:"creationTimestamp"`
+	ConfirmationTimestamp *int64         `json:"confirmationTimestamp,omitempty"`
+}
+
+type TransactionStatusByReferenceDTO struct {
+	CustomerReference string                 `json:"reference"`
+	Data              []TransactionStatusDTO `json:"info"`
+}
+
 type LogTopic struct {
 	Name  string `json:"name"`
 	Value string `json:"value"`

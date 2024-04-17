@@ -393,6 +393,31 @@ func (c *CoreApi) GetTxInfo(chainId uint64, txHash string) (*BlockchainTransacti
 
 }
 
+func (c *CoreApi) GetTxInfoByReference(reference string) (*TransactionStatusByReferenceDTO, error) {
+
+	responseDto := &TransactionStatusByReferenceDTO{}
+
+	err := c.sendCoreTransaction(
+		&SendCoreTransactionModel{
+			Url:           fmt.Sprintf(GetTxInfoByReference, reference),
+			HttpMethod:    http.MethodGet,
+			ResponseDto:   &responseDto,
+			TokenAuth:     c.tokenAuth,
+			AppID:         c.appID,
+			ParseRequest:  false,
+			ParseResponse: true,
+		},
+	)
+
+	if err != nil {
+		log.Printf("An error has raised getting tx info. %+v", err)
+		return nil, err
+	}
+
+	return responseDto, nil
+
+}
+
 func (c *CoreApi) IsContract(chainId uint64, address string) (bool, error) {
 
 	responseDto := make(map[string]bool)
