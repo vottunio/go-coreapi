@@ -17,6 +17,7 @@ const (
 	GetBlockchains                                string = "evm/info/chains"
 	GetGasPrice                                   string = "evm/network/gasprice?network=%d"
 	GetTxInfoUrl                                  string = "evm/info/transaction/%s?network=%d"
+	GetTxInfoByReference                          string = "evm/info/transaction/reference/%s"
 	IsContractUrl                                 string = "evm/info/address/%s/iscontract?network=%d"
 )
 
@@ -26,3 +27,5 @@ const (
 	AUTHORIZATION  string = "Authorization"
 	MIME_TYPE_JSON string = "application/json; charset=UTF-8"
 )
+
+type TxStatus string
