@@ -17,14 +17,16 @@ type AccountZeroResponseDTO struct {
 }
 
 type ContractDeployRequestDTO struct {
-	ContractSpecsID uint64        `json:"contractSpecsId"`
-	WalletAddress   string        `json:"sender,omitempty"`
-	Network         uint64        `json:"blockchainNetwork"`
-	GasLimit        uint64        `json:"gasLimit"`
-	GasPrice        *big.Int      `json:"gasPrice,omitempty"`
-	Nonce           *uint64       `json:"nonce,omitempty"`
-	Alias           *string       `json:"alias,omitempty"`
-	Params          []interface{} `json:"params,omitempty"`
+	ContractSpecsID  uint64        `json:"contractSpecsId"`
+	WalletAddress    string        `json:"sender,omitempty"`
+	Network          uint64        `json:"blockchainNetwork"`
+	GasLimit         uint64        `json:"gasLimit"`
+	UseGasEstimation *bool         `json:"useGasEstimation"`
+	GasPrice         *big.Int      `json:"gasPrice,omitempty"`
+	PriorityFee      *float64      `json:"priorityFee"`
+	Nonce            *uint64       `json:"nonce,omitempty"`
+	Alias            *string       `json:"alias,omitempty"`
+	Params           []interface{} `json:"params,omitempty"`
 }
 
 type ContractDeployResponseDTO struct {
@@ -40,6 +42,7 @@ type AbiMutableRequestDTO struct {
 	Nonce             *uint64       `json:"nonce,omitempty"`
 	Network           uint64        `json:"blockchainNetwork"`
 	Gas               *uint64       `json:"gas,omitempty"`
+	UseGasEstimation  *bool         `json:"useGasEstimation"`
 	GasPrice          *big.Int      `json:"gasPrice,omitempty"`
 	PriorityFee       *float64      `json:"priorityFee"`
 	Value             *big.Int      `json:"value,omitempty"`
@@ -47,7 +50,6 @@ type AbiMutableRequestDTO struct {
 	SpecsID           *uint64       `json:"contractSpecsId,omitempty"`
 	Pin               *string       `json:"pin,omitempty"`
 	CustomerReference *string       `json:"myReference,omitempty"`
-	UseGasEstimation  *bool         `json:"useGasEstimation"`
 }
 
 type AbiMutableResponseDTO struct {
