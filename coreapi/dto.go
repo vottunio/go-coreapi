@@ -41,11 +41,13 @@ type AbiMutableRequestDTO struct {
 	Network           uint64        `json:"blockchainNetwork"`
 	Gas               *uint64       `json:"gas,omitempty"`
 	GasPrice          *big.Int      `json:"gasPrice,omitempty"`
+	PriorityFee       *float64      `json:"priorityFee"`
 	Value             *big.Int      `json:"value,omitempty"`
 	Params            []interface{} `json:"params,omitempty"`
 	SpecsID           *uint64       `json:"contractSpecsId,omitempty"`
 	Pin               *string       `json:"pin,omitempty"`
 	CustomerReference *string       `json:"myReference,omitempty"`
+	UseGasEstimation  *bool         `json:"useGasEstimation"`
 }
 
 type AbiMutableResponseDTO struct {
