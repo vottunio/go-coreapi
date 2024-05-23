@@ -10,6 +10,7 @@ import (
 	"net/url"
 	"time"
 
+	"github.com/vottunio/go-coreapi/decoder"
 	"github.com/vottunio/log"
 )
 
@@ -77,10 +78,10 @@ func RequestApiEndpoint(r *RequestApiEndpointInfo, setReqHeaders SetReqHeaders, 
 						r.ResponseData = &kk
 
 					} else if parseResponse {
-						err = json.Unmarshal(body, &r.ResponseData)
+						err = decoder.JsonNumberDecode(body, &r.ResponseData)
 						if err != nil {
 							log.Printf("Error unmarshaling token information received from api: %+v", err)
-							return errors.New(fmt.Sprintf("%s - Error unmarshaling token information received from api: %+v", ErrorParsingJson, err))
+							return fmt.Errorf("%s - Error unmarshaling token information received from api: %+v", ErrorParsingJson, err)
 						}
 					}
 					r.ResponseStatus = statuscode
