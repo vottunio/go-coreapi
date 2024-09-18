@@ -344,6 +344,30 @@ func (c *CoreApi) GetBlockchains() (*ChainsListDTO, error) {
 	return responseDto, nil
 }
 
+func (c *CoreApi) GetBlockchainsByType(blockchainType uint64) (*ChainsListDTO, error) {
+
+	responseDto := &ChainsListDTO{}
+
+	err := c.sendCoreTransaction(
+		&SendCoreTransactionModel{
+			Url:           GetBlockchains + fmt.Sprintf("?type=%d", blockchainType),
+			HttpMethod:    http.MethodGet,
+			ResponseDto:   responseDto,
+			TokenAuth:     c.tokenAuth,
+			AppID:         c.appID,
+			ParseRequest:  false,
+			ParseResponse: true,
+		},
+	)
+
+	if err != nil {
+		log.Printf("An error has raised getting blockchains. %+v", err)
+		return nil, err
+	}
+
+	return responseDto, nil
+}
+
 func (c *CoreApi) GetGasPrice(gasprice *GasPriceRequestDTO) (*GasPriceResponseDTO, error) {
 
 	responseDto := &GasPriceResponseDTO{}
