@@ -8,6 +8,7 @@ const (
 	WalletSeedPhraseUrl                           string = "evm/wallet/custodied/user/wallet"
 	CustodiedWalletCoreMutableUrl                 string = "evm/wallet/custodied/transact/mutable?strategy=%d"
 	CoreMutableUrl                                string = "evm/transact/mutable"
+	CoreMutableUrl2                               string = "evm/transact/mutable2"
 	TransferNativeNetworkCryptoUrl                string = "evm/chain/transfer"
 	CustodiedWalletTransferNativeNetworkCryptoUrl string = "evm/wallet/custodied/transfer?strategy=%d"
 	CoreViewUrl                                   string = "evm/transact/view"

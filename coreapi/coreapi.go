@@ -225,6 +225,31 @@ func (c *CoreApi) SendMutableTransaction(requestDto *AbiMutableRequestDTO) (*Abi
 	return responseDto, nil
 }
 
+// Sends a Mutable transaction
+func (c *CoreApi) SendMutableTransactionForUser(requestDto *AbiMutableRequestDTO) (*AbiMutableResponseDTO, error) {
+	var responseDto *AbiMutableResponseDTO
+
+	err := c.sendCoreTransaction(
+		&SendCoreTransactionModel{
+			Url:           CoreMutableUrl2,
+			HttpMethod:    http.MethodPost,
+			RequestDto:    &requestDto,
+			ResponseDto:   &responseDto,
+			TokenAuth:     c.tokenAuth,
+			AppID:         c.appID,
+			ParseRequest:  true,
+			ParseResponse: true,
+		},
+	)
+
+	if err != nil {
+		log.Printf("An error has raised calling core api sending mutable transaction. %+v", err)
+		return nil, err
+	}
+
+	return responseDto, nil
+}
+
 func (c *CoreApi) SendViewTransaction(requestDto *AbiViewOptionsDTO) ([]interface{}, error) {
 	var responseDto []interface{}
 
