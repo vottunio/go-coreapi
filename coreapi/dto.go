@@ -50,6 +50,7 @@ type AbiMutableRequestDTO struct {
 	SpecsID           *uint64       `json:"contractSpecsId,omitempty"`
 	Pin               *string       `json:"pin,omitempty"`
 	CustomerReference *string       `json:"myReference,omitempty"`
+	UserID            string        `json:"userId,omitempty"`
 }
 
 type AbiMutableResponseDTO struct {
