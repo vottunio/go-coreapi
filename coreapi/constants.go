@@ -2,6 +2,7 @@ package coreapi
 
 const (
 	ContractDeployUrl                             string = "evm/contract/deploy"
+	DecentralisedContractDeployUrl                string = "evm/contract/decentralised/deploy"
 	NewWalletUrl                                  string = "evm/wallet/custodied/new" //New wallet url
 	AccountZeroAddressUrl                         string = "evm/wallet/custodied/address"
 	UsersRegisteredWithCustodiedWalletUrl         string = "evm/wallet/custodied/list"
