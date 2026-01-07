@@ -77,7 +77,7 @@ func (c *CoreApi) DeployNewContractWithJti(jti string, requestDto *ContractDeplo
 }
 
 // Deploys a new contract
-func (c *CoreApi) DecentralisedDeployNewContractWithJti(jti string, requestDto *ContractDeployRequestDTO) (*ContractDeployResponseDTO, error) {
+func (c *CoreApi) DecentralisedDeployNewContractWithJti(jti string, requestDto *DecentralisedContractDeployRequestDTO) (*ContractDeployResponseDTO, error) {
 
 	var responseDto *ContractDeployResponseDTO
 	url := DecentralisedContractDeployUrl + "?jti=%s"

@@ -29,6 +29,21 @@ type ContractDeployRequestDTO struct {
 	Params           []interface{} `json:"params,omitempty"`
 }
 
+type DecentralisedContractDeployRequestDTO struct {
+	ContractSpecsID  uint64        `json:"contractSpecsId"`
+	WalletAddress    string        `json:"sender,omitempty"`
+	Network          uint64        `json:"blockchainNetwork"`
+	GasLimit         uint64        `json:"gasLimit"`
+	UseGasEstimation *bool         `json:"useGasEstimation"`
+	GasPrice         *big.Int      `json:"gasPrice,omitempty"`
+	PriorityFee      *float64      `json:"priorityFee"`
+	Nonce            *uint64       `json:"nonce,omitempty"`
+	Alias            *string       `json:"alias,omitempty"`
+	Params           []interface{} `json:"params,omitempty"`
+	TxHash           string        `json:"txHash"`
+	ContractAddress  string        `json:"contractAddress"`
+}
+
 type ContractDeployResponseDTO struct {
 	ContractAddress string `json:"contractAddress"`
 	TxHash          string `json:"txHash"`
