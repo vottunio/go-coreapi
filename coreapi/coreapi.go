@@ -161,7 +161,7 @@ func (c *CoreApi) ActivateUserWallet(requestDto *ActivateUserWalletDTO) (*Accoun
 	err := c.sendCoreTransaction(
 		&SendCoreTransactionModel{
 			Url:           ActivateUserWalletUrl,
-			HttpMethod:    http.MethodGet,
+			HttpMethod:    http.MethodPost,
 			RequestDto:    &requestDto,
 			ResponseDto:   &responseDto,
 			TokenAuth:     c.tokenAuth,
