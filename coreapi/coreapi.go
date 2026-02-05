@@ -154,9 +154,9 @@ func (c *CoreApi) AccountZeroAddress(requestDto *AccountZeroRequestDTO) (*Accoun
 }
 
 // Returns the user account zero address. It is obtained creating the wallet from the seed prhase ang deriving the account 0.
-func (c *CoreApi) ActivateUserWallet(requestDto *ActivateUserWalletDTO) (*AccountZeroResponseDTO, error) {
+func (c *CoreApi) ActivateUserWallet(requestDto *ActivateUserWalletDTO) (*ActivateUserWalletResponseDTO, error) {
 
-	var responseDto *AccountZeroResponseDTO
+	var responseDto *ActivateUserWalletResponseDTO
 
 	err := c.sendCoreTransaction(
 		&SendCoreTransactionModel{

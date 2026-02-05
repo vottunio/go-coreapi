@@ -85,6 +85,12 @@ type ActivateUserWalletDTO struct {
 	WalletAddress string `json:"walletAddress"`
 }
 
+type ActivateUserWalletResponseDTO struct {
+	Message        string `json:"message"`
+	AccountAddress string `json:"accountAddress"`
+	Error          bool   `json:"error"`
+}
+
 type UserWalletSeedRequestDTO struct {
 	UserEmail string `json:"userEmail"`
 	Pin       string `json:"pin"`
