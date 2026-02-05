@@ -79,6 +79,12 @@ type AccountZeroRequestDTO struct {
 	Email string `json:"userEmail"`
 }
 
+type ActivateUserWalletDTO struct {
+	// The user email
+	Email         string `json:"userEmail"`
+	WalletAddress string `json:"walletAddress"`
+}
+
 type UserWalletSeedRequestDTO struct {
 	UserEmail string `json:"userEmail"`
 	Pin       string `json:"pin"`

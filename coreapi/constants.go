@@ -5,6 +5,7 @@ const (
 	DecentralisedContractDeployUrl                string = "evm/contract/decentralised/deploy"
 	NewWalletUrl                                  string = "evm/wallet/custodied/new" //New wallet url
 	AccountZeroAddressUrl                         string = "evm/wallet/custodied/address"
+	ActivateUserWalletUrl                         string = "evm/wallet/custodied/wallet/activate"
 	UsersRegisteredWithCustodiedWalletUrl         string = "evm/wallet/custodied/list"
 	WalletSeedPhraseUrl                           string = "evm/wallet/custodied/user/wallet"
 	CustodiedWalletCoreMutableUrl                 string = "evm/wallet/custodied/transact/mutable?strategy=%d"

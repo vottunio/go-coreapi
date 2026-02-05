@@ -153,6 +153,31 @@ func (c *CoreApi) AccountZeroAddress(requestDto *AccountZeroRequestDTO) (*Accoun
 	return responseDto, nil
 }
 
+// Returns the user account zero address. It is obtained creating the wallet from the seed prhase ang deriving the account 0.
+func (c *CoreApi) ActivateUserWallet(requestDto *ActivateUserWalletDTO) (*AccountZeroResponseDTO, error) {
+
+	var responseDto *AccountZeroResponseDTO
+
+	err := c.sendCoreTransaction(
+		&SendCoreTransactionModel{
+			Url:           ActivateUserWalletUrl,
+			HttpMethod:    http.MethodGet,
+			RequestDto:    &requestDto,
+			ResponseDto:   &responseDto,
+			TokenAuth:     c.tokenAuth,
+			AppID:         c.appID,
+			ParseRequest:  true,
+			ParseResponse: true,
+		},
+	)
+	if err != nil {
+		log.Printf("An error has raised calling core api AccountZeroAddress. %+v", err)
+		return nil, err
+	}
+
+	return responseDto, nil
+}
+
 // Returns all the customer users paginated by offset and rows
 func (c *CoreApi) ListUserInfo(offset, rows uint32) (response *[]UserInfotDTO, err error) {
 
