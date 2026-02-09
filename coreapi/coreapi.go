@@ -171,7 +171,32 @@ func (c *CoreApi) ActivateUserWallet(requestDto *ActivateUserWalletDTO) (*Activa
 		},
 	)
 	if err != nil {
-		log.Printf("An error has raised calling core api AccountZeroAddress. %+v", err)
+		log.Printf("An error has raised calling core api ActivateUserWallet. %+v", err)
+		return nil, err
+	}
+
+	return responseDto, nil
+}
+
+// Returns the user account zero address. It is obtained creating the wallet from the seed prhase ang deriving the account 0.
+func (c *CoreApi) DeActivateUserWallet(requestDto *DeWalletActivationDeactivationRequest) (*ActivateUserWalletResponseDTO, error) {
+
+	var responseDto *ActivateUserWalletResponseDTO
+
+	err := c.sendCoreTransaction(
+		&SendCoreTransactionModel{
+			Url:           DeActivateUserWalletUrl,
+			HttpMethod:    http.MethodPost,
+			RequestDto:    &requestDto,
+			ResponseDto:   &responseDto,
+			TokenAuth:     c.tokenAuth,
+			AppID:         c.appID,
+			ParseRequest:  true,
+			ParseResponse: true,
+		},
+	)
+	if err != nil {
+		log.Printf("An error has raised calling core api DeActivateUserWallet. %+v", err)
 		return nil, err
 	}
 
